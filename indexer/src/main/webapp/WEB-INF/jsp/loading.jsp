@@ -2,14 +2,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Carregando índice...</title>
+        <title>Criação do índice</title>
         
-        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="icon" type="image/png" href="img/favicon.png"/>
         
-        <script src="js/jquery-3.5.1.min.js"></script>
-        <script src="js/scripts.js"></script>
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/loading.css" />
+        
+        <script src="js/jquery-min.js"></script>
+        
+        <script src="js/loading.js"></script>
     </head>
-    <body onload="redirectTo()">
+    <body onload="loading()">
         <div class="loading-icon" />
     </body>
 </html>
