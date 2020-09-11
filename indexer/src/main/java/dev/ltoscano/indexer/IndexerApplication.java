@@ -48,6 +48,7 @@ public class IndexerApplication
         {
             case Web:
             {
+                IndexerWebApplication.main(args);
                 break;
             }
             case Console:
@@ -57,11 +58,12 @@ public class IndexerApplication
             }
             case Test:
             {
+                IndexerTestApplication.main(args);
                 break;
             }
             default:
             {
-                
+                IndexerWebApplication.main(args);
             }
         }
     }

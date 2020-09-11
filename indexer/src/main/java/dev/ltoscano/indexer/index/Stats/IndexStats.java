@@ -1,7 +1,4 @@
-package dev.ltoscano.indexer.index.Stats;
-
-import java.util.ArrayList;
-import java.util.List;
+package dev.ltoscano.indexer.index.stats;
 
 /**
  * Classe com as estatísticas do índice

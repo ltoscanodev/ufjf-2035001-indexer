@@ -1,6 +1,6 @@
 package dev.ltoscano.indexer.structure;
 
-import dev.ltoscano.indexer.index.Stats.IndexStructureStats;
+import dev.ltoscano.indexer.index.stats.IndexStructureStats;
 import dev.ltoscano.indexer.model.IndexEntry;
 import java.util.List;
 

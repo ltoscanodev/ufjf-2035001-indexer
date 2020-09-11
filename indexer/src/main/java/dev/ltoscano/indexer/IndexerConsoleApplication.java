@@ -2,8 +2,8 @@ package dev.ltoscano.indexer;
 
 import dev.ltoscano.indexer.configuration.AppConfig;
 import dev.ltoscano.indexer.index.Index;
-import dev.ltoscano.indexer.index.Stats.IndexStats;
-import dev.ltoscano.indexer.index.Stats.QueryStats;
+import dev.ltoscano.indexer.index.stats.IndexStats;
+import dev.ltoscano.indexer.index.stats.QueryStats;
 import dev.ltoscano.indexer.model.QueryResult;
 import dev.ltoscano.indexer.structure.IndexStructure;
 import dev.ltoscano.indexer.util.TimeUtil;
@@ -81,7 +81,7 @@ public class IndexerConsoleApplication
 
             System.out.println("Tamanho do dataset: " + indexStats.getDatasetSize());
             System.out.println("Quantidade de entradas do índice: " + indexStats.getIndexEntries());
-            System.out.println("Tempo da criação do índice (em segundos): " + TimeUtil.convertNanoToSeconds(indexStats.getBuildTime()));
+            System.out.println("Tempo da criação do índice (Em segundos): " + TimeUtil.convertNanoToSeconds(indexStats.getBuildTime()));
             
             QueryStats queryStats = index.getQueryStats();
                 
@@ -96,7 +96,7 @@ public class IndexerConsoleApplication
             }
             System.out.println();
 
-            System.out.println("Tempo da consulta (em segundos): " + queryStats.getLastQueryTime());
+            System.out.println("Tempo da consulta (Em milisegundos): " + TimeUtil.convertNanoToMilliseconds(queryStats.getLastQueryTime()));
 
             System.out.println();
             System.out.println("Resultado:");
@@ -139,7 +139,7 @@ public class IndexerConsoleApplication
                     System.out.println();
                     System.out.println(result.getNews().getHeadline());
                     System.out.println(result.getNews().getShortDescription());
-                    System.out.println(result.getNews().getAuthors() + ", " + result.getNews().getDate());
+                    System.out.println(result.getNews().getAuthors() + " (" + result.getNews().getDate() + ")");
                 }
             }
         }

@@ -1,4 +1,4 @@
-package dev.ltoscano.indexer.index.Stats;
+package dev.ltoscano.indexer.index.stats;
 
 import dev.ltoscano.indexer.configuration.AppConfig;
 import dev.ltoscano.indexer.model.QueryResult;

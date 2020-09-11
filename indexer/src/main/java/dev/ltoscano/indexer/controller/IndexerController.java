@@ -1,9 +1,8 @@
 package dev.ltoscano.indexer.controller;
 
-import dev.ltoscano.indexer.configuration.AppConfig;
 import dev.ltoscano.indexer.index.Index;
-import dev.ltoscano.indexer.index.Stats.IndexStats;
-import dev.ltoscano.indexer.index.Stats.QueryStats;
+import dev.ltoscano.indexer.index.stats.IndexStats;
+import dev.ltoscano.indexer.index.stats.QueryStats;
 import dev.ltoscano.indexer.model.QueryResult;
 import dev.ltoscano.indexer.util.TimeUtil;
 import java.io.IOException;

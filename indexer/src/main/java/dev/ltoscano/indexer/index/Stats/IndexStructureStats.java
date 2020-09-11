@@ -1,4 +1,4 @@
-package dev.ltoscano.indexer.index.Stats;
+package dev.ltoscano.indexer.index.stats;
 
 import java.util.ArrayList;
 import java.util.List;

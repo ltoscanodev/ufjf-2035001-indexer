@@ -43,7 +43,7 @@
                                     <h2>${result.news.headline}</h2>
                                 </a>
                                 <p>${result.news.shortDescription}</p>
-                                <p>${result.news.authors}, ${result.news.date}</p>
+                                <p>${result.news.authors} (${result.news.date})</p>
                             </div>
                         </c:forEach>
                     </div>

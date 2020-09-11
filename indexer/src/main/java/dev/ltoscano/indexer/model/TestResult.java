@@ -1,8 +1,8 @@
 package dev.ltoscano.indexer.model;
 
-import dev.ltoscano.indexer.index.Stats.IndexStats;
-import dev.ltoscano.indexer.index.Stats.IndexStructureStats;
-import dev.ltoscano.indexer.index.Stats.QueryStats;
+import dev.ltoscano.indexer.index.stats.IndexStats;
+import dev.ltoscano.indexer.index.stats.IndexStructureStats;
+import dev.ltoscano.indexer.index.stats.QueryStats;
 
 /**
  *

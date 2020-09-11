@@ -1,14 +1,15 @@
 package dev.ltoscano.indexer.index;
 
-import dev.ltoscano.indexer.index.Stats.IndexStats;
+import dev.ltoscano.indexer.index.stats.IndexStats;
 import dev.ltoscano.indexer.model.IndexEntry;
 import dev.ltoscano.indexer.configuration.AppConfig;
 import dev.ltoscano.indexer.dataset.NewsDataset;
-import dev.ltoscano.indexer.index.Stats.IndexStructureStats;
-import dev.ltoscano.indexer.index.Stats.QueryStats;
+import dev.ltoscano.indexer.index.stats.IndexStructureStats;
+import dev.ltoscano.indexer.index.stats.QueryStats;
 import dev.ltoscano.indexer.model.Document;
 import dev.ltoscano.indexer.model.News;
 import dev.ltoscano.indexer.model.QueryResult;
+import dev.ltoscano.indexer.sort.MergeSort;
 import dev.ltoscano.indexer.structure.AVL.AVL;
 import dev.ltoscano.indexer.structure.HashTable.HashTable;
 import java.io.IOException;
@@ -234,27 +235,17 @@ public class Index
                     (1.0 / newsList.get(key).getWordFrequencies().size()) * relevanceMap.get(key));
         }
         
-        // Ordena o mapa pelas relevâncias e limita o resultado ('AppConfig.queryLimit')
-        Map<Integer, Double> topRelevances
-                = relevanceMap.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                        .limit(AppConfig.queryLimit)
-                        .collect(Collectors.toMap(
-                                Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        Entry<Integer, Double>[] relevanceList = MergeSort.sortMap(relevanceMap);
         
-        // Lista com os resultados da consulta
         List<QueryResult> resultList = new ArrayList<>();
         
-        for(Entry<Integer, Double> entry : topRelevances.entrySet())
+        for(int i = 0; (i < relevanceList.length) && (i < AppConfig.queryLimit); i++)
         {
-            // Armazena a notícia e sua relevância
-            resultList.add(new QueryResult(newsList.get(entry.getKey()), entry.getValue()));
+            resultList.add(new QueryResult(newsList.get(relevanceList[i].getKey()), relevanceList[i].getValue()));
         }
         
-        long queryTime = (System.nanoTime() - startTime);
-        
         // Armazena as estatísticas da consulta
-        queryStats.setLastQuery(wordList,resultList, queryTime);
+        queryStats.setLastQuery(wordList,resultList, (System.nanoTime() - startTime));
         
         // Retorna o resultado
         return resultList;
