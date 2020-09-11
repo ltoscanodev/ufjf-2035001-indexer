@@ -11,17 +11,17 @@ import java.util.StringTokenizer;
  */
 public class Tokenizer 
 {
-    private static String normalizeString(String str)
+    public static String normalize(String str)
     {
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^A-Za-z0-9]", "").toLowerCase();
     }
     
-    public static List<String> getTokens(String str, boolean normalize)
+    public static List<String> getTokens(String str)
     {
-        return getTokens(str, " ", normalize);
+        return getTokens(str, " ");
     }
     
-    public static List<String> getTokens(String str, String sep, boolean normalize)
+    public static List<String> getTokens(String str, String sep)
     {
         List<String> tokenList = new ArrayList<>();
         StringTokenizer tokenizer = new StringTokenizer(str, sep);
@@ -30,18 +30,11 @@ public class Tokenizer
         {
             String token = tokenizer.nextToken();
             
-            if(normalize)
-            {
-                String normalizedToken = normalizeString(token);
+            String normalizedToken = normalize(token);
                 
-                if(!normalizedToken.isEmpty())
-                {
-                    tokenList.add(normalizeString(token));   
-                }
-            }
-            else
+            if(!normalizedToken.isEmpty())
             {
-                tokenList.add(token);
+                tokenList.add(normalize(token));   
             }
         }
         

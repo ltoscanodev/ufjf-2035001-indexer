@@ -1,31 +1,27 @@
-package dev.ltoscano.indexer.index;
+package dev.ltoscano.indexer.index.Stats;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
+ * Classe com as estatísticas do índice
+ * 
  * @author ltosc
  */
 public class IndexStats 
 {
+    // Quantidade de notícias no dataset
     private int datasetSize;
+    // Quantidade de entradas no índice (Termos)
     private int indexEntries;
-    
+    // Tempo de construção (em nanosegundos) do índice
     private long buildTime;
-    private long lastQueryTime;
     
     public IndexStats()
     {
         this.datasetSize = 0;
         this.indexEntries = 0;
-        
         this.buildTime = 0;
-        this.lastQueryTime = 0;
-    }
-    
-    private long convertToSeconds(long time)
-    {
-        return TimeUnit.SECONDS.convert(time, TimeUnit.NANOSECONDS);
     }
     
     /**
@@ -69,21 +65,6 @@ public class IndexStats
      */
     public void setBuildTime(long buildTime) 
     {
-        this.buildTime = convertToSeconds(buildTime);
-    }
-
-    /**
-     * @return the lastQueryTime
-     */
-    public long getLastQueryTime() {
-        return lastQueryTime;
-    }
-
-    /**
-     * @param lastQueryTime the lastQueryTime to set
-     */
-    public void setLastQueryTime(long lastQueryTime) 
-    {
-        this.lastQueryTime = convertToSeconds(lastQueryTime);
+        this.buildTime = buildTime;
     }
 }

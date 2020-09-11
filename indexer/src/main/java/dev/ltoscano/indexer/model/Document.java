@@ -1,7 +1,8 @@
 package dev.ltoscano.indexer.model;
 
 /**
- *
+ *  Classe que armazena o id de uma notícia e o peso de um termo neste documento
+ * 
  * @author ltosc
  */
 public class Document 

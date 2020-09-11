@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Classe que representa uma entrada na estrutura do índice
  *
  * @author ltosc
  */
 public class IndexEntry
 {
+    // Palavra da entrada do índice
     private final String word;
+    // Lista de documentos que contém esta palavra
     private final List<Document> documentList;
     
     public IndexEntry(String word)

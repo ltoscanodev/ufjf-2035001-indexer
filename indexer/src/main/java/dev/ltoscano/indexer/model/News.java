@@ -8,21 +8,26 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ *  Classe que representa uma notícia obtida do dataset de notícias
+ * 
  * @author ltosc
  */
 public class News 
 {
-    private static int ID_COUNT = 0;
-    
-    private final int id;
+    // Categoria da notícia
     private String category;
+    // Título da notícia
     private String headline;
+    // Descrição da notícia
     private String short_description;
+    // Autores da notícia
     private String authors;
+    // Data da notícia
     private String date;
+    // URL da notícia
     private String link;
     
+    // Mapa de frequências de cada palavra da notícia
     private final Map<String, Integer> wordFrequencies;
     
     public News()
@@ -32,7 +37,6 @@ public class News
     
     public News(String category, String headline, String shortDescription, String authors, String date, String link)
     {
-        this.id = ID_COUNT++;
         this.category = category;
         this.headline = headline;
         this.short_description = shortDescription;
@@ -43,28 +47,31 @@ public class News
         this.wordFrequencies = new HashMap<>();
     }
     
+    /***
+     * Função que preenche o mapa de frequências de cada palavra da notícia
+     */
     public void buildWordFrequencies()
     {
+        // Limpa o mapa
         wordFrequencies.clear();
         
+        // Lista de palavras da notícia
         List<String> wordList = new ArrayList<>();
-        wordList.addAll(Tokenizer.getTokens(getHeadline(), true));
-        wordList.addAll(Tokenizer.getTokens(getShortDescription(), true));
+        // Faz o processo de tokenização do título da notícia
+        wordList.addAll(Tokenizer.getTokens(getHeadline()));
+        // Faz o processo de tokenização para a descrição da notícia
+        wordList.addAll(Tokenizer.getTokens(getShortDescription()));
         
+        // Para cada palavra da notícia
         for(String word : wordList)
         {
+            // Verifica se o mapa ainda não contém a palavra
             if(!wordFrequencies.containsKey(word))
             {
+                // Se não contiver, conta a frequência da palavra no documento e a armazena no mapa
                 wordFrequencies.put(word, Collections.frequency(wordList, word));
             }
         }
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
     }
 
     /**

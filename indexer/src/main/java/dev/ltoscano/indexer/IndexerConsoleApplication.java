@@ -2,8 +2,11 @@ package dev.ltoscano.indexer;
 
 import dev.ltoscano.indexer.configuration.AppConfig;
 import dev.ltoscano.indexer.index.Index;
-import dev.ltoscano.indexer.index.IndexStats;
-import dev.ltoscano.indexer.model.News;
+import dev.ltoscano.indexer.index.Stats.IndexStats;
+import dev.ltoscano.indexer.index.Stats.QueryStats;
+import dev.ltoscano.indexer.model.QueryResult;
+import dev.ltoscano.indexer.structure.IndexStructure;
+import dev.ltoscano.indexer.util.TimeUtil;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -52,8 +55,8 @@ public class IndexerConsoleApplication
             try 
             {
                 System.out.println("Aguarde, criando índice...");
-                index = new Index(AppConfig.datasetPath);
-                System.out.println("O índice foi criado em " + index.getIndexStats().getBuildTime() + " segundos");
+                index = new Index();
+                System.out.println("O índice foi criado em " + TimeUtil.convertNanoToSeconds(index.getIndexStats().getBuildTime()) + " segundos");
             }
             catch (IOException ex)
             {
@@ -74,12 +77,36 @@ public class IndexerConsoleApplication
         }
         else
         {
-            IndexStats stats = index.getIndexStats();
+            IndexStats indexStats = index.getIndexStats();
 
-            System.out.println("Tamanho do dataset: " + stats.getDatasetSize());
-            System.out.println("Quantidade de entradas do índice: " + stats.getIndexEntries());
-            System.out.println("Tempo da criação do índice (em segundos): " + stats.getBuildTime());
-            System.out.println("Tempo da último consulta (em segundos): " + stats.getLastQueryTime());
+            System.out.println("Tamanho do dataset: " + indexStats.getDatasetSize());
+            System.out.println("Quantidade de entradas do índice: " + indexStats.getIndexEntries());
+            System.out.println("Tempo da criação do índice (em segundos): " + TimeUtil.convertNanoToSeconds(indexStats.getBuildTime()));
+            
+            QueryStats queryStats = index.getQueryStats();
+                
+            System.out.println();
+            System.out.println("========== Estatísticas da última consulta ==========");
+
+            System.out.print("Consulta: ");
+
+            for(String word : queryStats.getLastQuery())
+            {
+                System.out.print(word + " ");
+            }
+            System.out.println();
+
+            System.out.println("Tempo da consulta (em segundos): " + queryStats.getLastQueryTime());
+
+            System.out.println();
+            System.out.println("Resultado:");
+
+            for(QueryResult result : queryStats.getLastQueryResult())
+            {
+                System.out.println(
+                        "[" + result.getRelevance() + "] ===> " 
+                                + result.getNews().getHeadline());
+            }
         }
     }
     
@@ -105,23 +132,76 @@ public class IndexerConsoleApplication
             }
             else
             {
-                List<News> resultList = index.query(Arrays.asList(query.split(" ")));
-                News news;
+                List<QueryResult> resultList = index.query(Arrays.asList(query.split(" ")));
 
-                for(int i = 0; i < resultList.size(); i++)
+                for(QueryResult result : resultList)
                 {
-                    news = resultList.get(i);
-
                     System.out.println();
-                    System.out.println(news.getHeadline());
-                    System.out.println(news.getShortDescription());
-                    System.out.println(news.getAuthors() + ", " + news.getDate());
+                    System.out.println(result.getNews().getHeadline());
+                    System.out.println(result.getNews().getShortDescription());
+                    System.out.println(result.getNews().getAuthors() + ", " + result.getNews().getDate());
                 }
             }
         }
     }
     
-    public static void main(String[] args)
+    private static void setIndexStructureType(int type)
+    {
+        switch(type)
+        {
+            case 0:
+            {
+                AppConfig.indexStructureType = IndexStructure.IndexStructureType.HashTable;
+                break;
+            }
+            case 1:
+            {
+                AppConfig.indexStructureType = IndexStructure.IndexStructureType.AVL;
+                break;
+            }
+            case 2:
+            {
+                AppConfig.indexStructureType = IndexStructure.IndexStructureType.SkipList;
+                break;
+            }
+            case 3:
+            {
+                AppConfig.indexStructureType = IndexStructure.IndexStructureType.Trie;
+                break;
+            }
+            default:
+            {
+                AppConfig.indexStructureType = IndexStructure.IndexStructureType.HashTable;
+            }
+        }
+    }
+    
+    private static void parseArgs(String[] args)
+    {
+        switch(args.length)
+        {
+            case 2:
+            {
+                AppConfig.datasetPath = args[1];
+                break;
+            }
+            case 3:
+            {
+                AppConfig.datasetPath = args[1];
+                setIndexStructureType(Integer.valueOf(args[2]));
+                break;
+            }
+            case 4:
+            {
+                AppConfig.datasetPath = args[1];
+                setIndexStructureType(Integer.valueOf(args[2]));
+                AppConfig.queryLimit = Integer.valueOf(args[3]);
+                break;
+            }
+        }
+    }
+    
+    private static void runApp(String[] args)
     {
         int option;
         
@@ -146,5 +226,11 @@ public class IndexerConsoleApplication
                 }
             }
         }
+    }
+    
+    public static void main(String[] args)
+    {
+        parseArgs(args);
+        runApp(args);
     }
 }

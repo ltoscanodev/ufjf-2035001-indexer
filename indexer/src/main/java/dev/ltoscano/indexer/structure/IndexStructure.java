@@ -1,5 +1,6 @@
 package dev.ltoscano.indexer.structure;
 
+import dev.ltoscano.indexer.index.Stats.IndexStructureStats;
 import dev.ltoscano.indexer.model.IndexEntry;
 import java.util.List;
 
@@ -7,11 +8,11 @@ import java.util.List;
  *
  * @author ltosc
  */
-public interface IndexStructure
+public abstract class IndexStructure
 {
     public enum IndexStructureType 
     {
-        SimpleLinkedList(0), DoubleLinkedList(1), SkipList(2), HashTable(3), AVL(4), Trie(5);
+        HashTable(0), AVL(1), SkipList(2), Trie(3);
         
         private final int value;
 
@@ -25,17 +26,28 @@ public interface IndexStructure
         }
     }
     
-    public List<String> keys();
-    public List<IndexEntry> values();
+    private final IndexStructureStats structureStats;
     
-    public void insert(String key, IndexEntry value);
-    public IndexEntry get(String key);
-    public void remove(String key);
+    public IndexStructure()
+    {
+        this.structureStats = new IndexStructureStats();
+    }
     
-    public boolean empty();
-    public boolean contains(String key);
+    public abstract List<String> keys();
+    public abstract List<IndexEntry> values();
     
-    public int size();
+    public abstract void insert(String key, IndexEntry value);
+    public abstract IndexEntry get(String key);
     
-    public void print();
+    public abstract boolean empty();
+    public abstract boolean contains(String key);
+    
+    public abstract int size();
+
+    /**
+     * @return the structureStats
+     */
+    public IndexStructureStats getStructureStats() {
+        return structureStats;
+    }
 }

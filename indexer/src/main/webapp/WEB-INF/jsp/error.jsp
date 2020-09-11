@@ -1,17 +1,40 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Erro</title>
+        <title>Ocorreu um erro</title>
+
+        <link rel="icon" type="image/png" href="img/favicon.png"/>
+        
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/error.css" />
+        
+        <script src="js/jquery-min.js"></script>
+        <script src="js/error.js"></script>
     </head>
-    <body>
-        <h1>Error Page</h1>
-        <p>Application has encountered an error.</p>
-
-
-        <p>Failed URL: ${url}</p>
-        <p>Exception:  ${exception.message}</p>
-        <c:forEach items="${exception.stackTrace}" var="ste">${ste}<br></c:forEach>
-</body>
+    
+    <body class="loading">
+        <h1>500</h1>
+        <h2>Ocorreu um erro na aplicação <b>:(</b></h2>
+        <div class="gears">
+            <div class="gear one">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="gear two">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="gear three">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <div class="bottom">
+            <a href="/">Retornar para a página inicial</a>
+        </div>
+    </body>
 </html>

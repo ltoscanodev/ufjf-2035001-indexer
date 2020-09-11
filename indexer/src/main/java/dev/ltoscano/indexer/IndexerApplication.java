@@ -1,93 +1,68 @@
 package dev.ltoscano.indexer;
 
 import dev.ltoscano.indexer.configuration.AppConfig;
-import dev.ltoscano.indexer.structure.IndexStructure.IndexStructureType;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class IndexerApplication 
 {
-    private static void setIndexStructureType(int type)
+    private static void setRunMode(int type)
     {
         switch(type)
         {
             case 0:
             {
-                AppConfig.indexStructureType = IndexStructureType.SimpleLinkedList;
+                AppConfig.runMode = AppConfig.RunMode.Web;
                 break;
             }
             case 1:
             {
-                AppConfig.indexStructureType = IndexStructureType.DoubleLinkedList;
+                AppConfig.runMode = AppConfig.RunMode.Console;
                 break;
             }
             case 2:
             {
-                AppConfig.indexStructureType = IndexStructureType.SkipList;
-                break;
-            }
-            case 3:
-            {
-                AppConfig.indexStructureType = IndexStructureType.HashTable;
-                break;
-            }
-            case 4:
-            {
-                AppConfig.indexStructureType = IndexStructureType.AVL;
-                break;
-            }
-            case 5:
-            {
-                AppConfig.indexStructureType = IndexStructureType.Trie;
+                AppConfig.runMode = AppConfig.RunMode.Test;
                 break;
             }
             default:
             {
-                AppConfig.indexStructureType = IndexStructureType.HashTable;
+                AppConfig.runMode = AppConfig.RunMode.Web;
             }
+        }
+    }
+    
+    private static void parseArgs(String[] args)
+    {
+        if(args.length >= 1)
+        {
+            setRunMode(Integer.valueOf(args[0]));
         }
     }
     
     public static void main(String[] args) 
     {
-        switch(args.length)
-        {
-            case 1:
-            {
-                AppConfig.runConsole = (Integer.valueOf(args[0]) != 0);
-                break;
-            }
-            case 2:
-            {
-                AppConfig.runConsole = (Integer.valueOf(args[0]) != 0);
-                AppConfig.datasetPath = args[1];
-                break;
-            }
-            case 3:
-            {
-                AppConfig.runConsole = (Integer.valueOf(args[0]) != 0);
-                AppConfig.datasetPath = args[1];
-                setIndexStructureType(Integer.valueOf(args[2]));
-                break;
-            }
-            case 4:
-            {
-                AppConfig.runConsole = (Integer.valueOf(args[0]) != 0);
-                AppConfig.datasetPath = args[1];
-                setIndexStructureType(Integer.valueOf(args[2]));
-                AppConfig.queryLimit = Integer.valueOf(args[3]);
-                break;
-            }
-        }
+        parseArgs(args);
         
-        if(AppConfig.runConsole)
+        switch(AppConfig.runMode)
         {
-            IndexerConsoleApplication.main(args);
-        }
-        else
-        {
-            SpringApplication.run(IndexerApplication.class, args);
+            case Web:
+            {
+                break;
+            }
+            case Console:
+            {
+                IndexerConsoleApplication.main(args);
+                break;
+            }
+            case Test:
+            {
+                break;
+            }
+            default:
+            {
+                
+            }
         }
     }
 }
