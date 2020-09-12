@@ -93,7 +93,7 @@ public class IndexerController
             List<QueryResult> resultList = index.query(query);
             
             // Preenche o modelo com o tempo da consulta
-            model.addAttribute("queryTime", TimeUtil.convertNanoToMilliseconds(index.getQueryStats().getLastQueryTime()));
+            model.addAttribute("queryTime", TimeUtil.convertNanoToMilliseconds(index.getQueryStats().getLastTotalQueryTime()));
             // Preenche o modelo com o resultado da consulta ao índice
             model.addAttribute("resultList", resultList);
             
@@ -135,7 +135,7 @@ public class IndexerController
             // Preenche o modelo com as estatísticas da última consulta realizada
             model.addAttribute("queryStats", true);
             model.addAttribute("query", query);
-            model.addAttribute("queryTime", TimeUtil.convertNanoToMilliseconds(queryStats.getLastQueryTime()));
+            model.addAttribute("queryTime", TimeUtil.convertNanoToMilliseconds(queryStats.getLastTotalQueryTime()));
             model.addAttribute("queryResultList", queryStats.getLastQueryResult());
             
             // Retorna a página de estatísticas

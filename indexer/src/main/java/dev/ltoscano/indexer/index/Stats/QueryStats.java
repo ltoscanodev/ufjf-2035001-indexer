@@ -15,13 +15,21 @@ public class QueryStats
     // Lista de termos da consulta
     private List<String> lastQuery;
     // Tempo para obter o resultado da consulta (em nanosegundos)
-    private long lastQueryTime;
+    private long lastTotalQueryTime;
     // Lista de resultados da consulta (Notícia, relevância)
     private List<QueryResult> lastQueryResult;
     
     private int queryCount;
+    
     private long chunkQueryTime;
+    private long chunkGetTime;
+    private long chunkRelevanceTime;
+    private long chunkSortTime;
+    
     private final List<Long> chunkQueryTimeList;
+    private final List<Long> chunkGetTimeList;
+    private final List<Long> chunkRelevanceTimeList;
+    private final List<Long> chunkSortTimeList;
     
     public QueryStats()
     {
@@ -31,12 +39,20 @@ public class QueryStats
     public QueryStats(List<String> query, long queryTime, List<QueryResult> queryResult)
     {
         this.lastQuery = query;
-        this.lastQueryTime = queryTime;
+        this.lastTotalQueryTime = queryTime;
         this.lastQueryResult = queryResult;
         
         this.queryCount = 0;
+        
         this.chunkQueryTime = 0;
+        this.chunkGetTime = 0;
+        this.chunkRelevanceTime = 0;
+        this.chunkSortTime = 0;
+        
         this.chunkQueryTimeList = new ArrayList<>();
+        this.chunkGetTimeList = new ArrayList<>();
+        this.chunkRelevanceTimeList = new ArrayList<>();
+        this.chunkSortTimeList = new ArrayList<>();
     }
 
     /**
@@ -49,28 +65,39 @@ public class QueryStats
     /**
      * @param lastQuery the lastQuery to set
      * @param lastQueryResult the lastQueryResult to set
-     * @param lastQueryTime the lastQueryTime
+     * @param lastQueryTime the lastTotalQueryTime
      */
-    public void setLastQuery(List<String> lastQuery, List<QueryResult> lastQueryResult, long lastQueryTime) 
+    public void setLastQuery(List<String> lastQuery, List<QueryResult> lastQueryResult, long lastQueryTime, long getTime, long relevanceTime, long sortTime) 
     {
         this.lastQuery = lastQuery;
-        this.lastQueryTime = lastQueryTime;
+        this.lastTotalQueryTime = lastQueryTime;
         this.lastQueryResult = lastQueryResult;
         
         queryCount++;
         chunkQueryTime += lastQueryTime;
+        chunkGetTime += getTime;
+        chunkRelevanceTime += relevanceTime;
+        chunkSortTime += sortTime;
         
         if((queryCount % AppConfig.queryChunk) == 0)
         {
             chunkQueryTimeList.add(chunkQueryTime);
+            getChunkGetTimeList().add(chunkGetTime);
+            chunkRelevanceTimeList.add(chunkRelevanceTime);
+            chunkSortTimeList.add(chunkSortTime);
+            
+            chunkQueryTime = 0;
+            chunkGetTime = 0;
+            chunkRelevanceTime = 0;
+            chunkSortTime = 0;
         }
     }
 
     /**
-     * @return the lastQueryTime
+     * @return the lastTotalQueryTime
      */
-    public long getLastQueryTime() {
-        return lastQueryTime;
+    public long getLastTotalQueryTime() {
+        return lastTotalQueryTime;
     }
 
     /**
@@ -92,5 +119,26 @@ public class QueryStats
      */
     public List<Long> getChunkQueryTimeList() {
         return chunkQueryTimeList;
+    }
+
+    /**
+     * @return the chunkRelevanceTimeList
+     */
+    public List<Long> getChunkRelevanceTimeList() {
+        return chunkRelevanceTimeList;
+    }
+
+    /**
+     * @return the chunkSortTimeList
+     */
+    public List<Long> getChunkSortTimeList() {
+        return chunkSortTimeList;
+    }
+
+    /**
+     * @return the chunkGetTimeList
+     */
+    public List<Long> getChunkGetTimeList() {
+        return chunkGetTimeList;
     }
 }

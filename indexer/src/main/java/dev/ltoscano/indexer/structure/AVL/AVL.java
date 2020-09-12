@@ -174,9 +174,9 @@ public class AVL extends IndexStructure
         rootNode = insertKey(rootNode, key, value);
         itemCount++;
         
-        if((itemCount % AppConfig.insertionLogTime) == 0)
+        if((itemCount % AppConfig.insertLogTime) == 0)
         {
-            getStructureStats().getInsertionTimeList().add(System.nanoTime() - startTime);
+            getStructureStats().getInsertTimeList().add(System.nanoTime() - startTime);
         }
         
         if((itemCount % AppConfig.memoryLogTime) == 0)

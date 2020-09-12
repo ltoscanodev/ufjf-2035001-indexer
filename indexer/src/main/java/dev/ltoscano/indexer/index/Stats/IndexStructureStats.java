@@ -1,5 +1,6 @@
 package dev.ltoscano.indexer.index.stats;
 
+import dev.ltoscano.indexer.configuration.AppConfig;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +10,20 @@ import java.util.List;
  */
 public class IndexStructureStats 
 {
-    private final List<Long> insertionTimeList;
+    private final List<Long> insertTimeList;
     private final List<Long> memoryUsageList;
     
     public IndexStructureStats()
     {
-        this.insertionTimeList = new ArrayList<>();
+        this.insertTimeList = new ArrayList<>();
         this.memoryUsageList = new ArrayList<>();
     }
 
     /**
-     * @return the insertionTimeList
+     * @return the insertTimeList
      */
-    public List<Long> getInsertionTimeList() {
-        return insertionTimeList;
+    public List<Long> getInsertTimeList() {
+        return insertTimeList;
     }
 
     /**

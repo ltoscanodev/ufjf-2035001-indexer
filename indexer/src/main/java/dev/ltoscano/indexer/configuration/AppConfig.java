@@ -35,15 +35,23 @@ public class AppConfig
     // Limite de resultados que devem ser retornados na busca
     public static int queryLimit = 20;
     
-    // Caminho dos arquivos com consultas para melhor caso, caso médio e pior caso
-    public static String bestTestFilePath = "src/main/resources/dataset/best-one-word-query.txt";
-    public static String avgTestFilePath = "src/main/resources/dataset/avg-one-word-query.txt";
-    public static String worstTestFilePath = "src/main/resources/dataset/worst-one-word-query.txt";
+    // Caminho dos arquivos com consultas para caso aleatório, melhor caso, caso médio e pior caso
+    public static String randomOneWordTestFilePath = "src/main/resources/dataset/random-one-word-query.txt";
+    public static String randomTwoWordTestFilePath = "src/main/resources/dataset/random-two-word-query.txt";
+    
+    public static String bestOneWordTestFilePath = "src/main/resources/dataset/best-one-word-query.txt";
+    public static String avgOneWordTestFilePath = "src/main/resources/dataset/avg-one-word-query.txt";
+    public static String worstOneWordTestFilePath = "src/main/resources/dataset/worst-one-word-query.txt";
+    
+    public static String bestTwoWordTestFilePath = "src/main/resources/dataset/best-two-word-query.txt";
+    public static String avgTwoWordTestFilePath = "src/main/resources/dataset/avg-two-word-query.txt";
+    public static String worstTwoWordTestFilePath = "src/main/resources/dataset/worst-two-word-query.txt";
     
     // Quantidade de testes que serão executados em cada etapa
-    public static int testRunSteps = 5;
+    public static int testRunSteps = 25;
     
+    public static int insertLogTime = 20000;
     public static int memoryLogTime = 20000;
-    public static int insertionLogTime = 20000;
+    
     public static int queryChunk = 1000;
 }

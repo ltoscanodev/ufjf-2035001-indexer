@@ -14,12 +14,9 @@ import dev.ltoscano.indexer.structure.AVL.AVL;
 import dev.ltoscano.indexer.structure.HashTable.HashTable;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import dev.ltoscano.indexer.structure.IndexStructure;
 import dev.ltoscano.indexer.structure.IndexStructure.IndexStructureType;
 import dev.ltoscano.indexer.structure.Trie.Trie;
@@ -191,51 +188,54 @@ public class Index
     public List<QueryResult> query(List<String> wordList)
     {
         // Tempo inicial da consulta
-        long startTime = System.nanoTime();
+        long startQueryTime = System.nanoTime();
         
         // Mapa de identificadores e valores de relevância de cada documento
         Map<Integer, Double> relevanceMap = new HashMap<>();
+        
+        long relevanceTime = 0;
+        long getTime = 0;
         
         // Para cada termo da consulta
         for(String word : wordList)
         {
             // Processa a palavra a obtém a entrada de índice correspondente
+            long startGetTime = System.nanoTime();
             IndexEntry indexEntry = indexStructure.get(Tokenizer.normalize(word));
+            getTime += (System.nanoTime() - startGetTime);
             
             // Verifica se a entrada de índice foi encontrada
             if(indexEntry != null)
             {
                 // Se sim, obtém a lista de documentos que contém o termo
                 List<Document> wordDocList = indexEntry.getDocumentList();
-            
+                
+                long startRelevanceTime = System.nanoTime();
                 // Para cada documento da lista, soma os pesos pré-calculados
                 // caso eles existam no documento
                 for(Document doc : wordDocList)
                 {
+                    double factor = (1.0 / newsList.get(doc.getId()).getWordFrequencies().size());
+                    
                     // Obtém a relevância do documento no mapa de relevâncias
                     double relevance = 
                             relevanceMap.containsKey(doc.getId()) ? 
                             relevanceMap.get(doc.getId()) : 0.0;
 
                     // Incrementa com o peso do documento para o termo
-                    relevance += doc.getWeight();
+                    relevance += factor * doc.getWeight();
                     
                     // Armazena novamente no mapa de relevância
                     relevanceMap.put(doc.getId(), relevance);
                 }
+                
+                relevanceTime += (System.nanoTime() - startRelevanceTime);
             }
         }
         
-        // Para cada documento no mapa de relevâncias
-        for(Integer key : relevanceMap.keySet())
-        {
-            // Calcula a relevância do documento: r(i) = (1/ni) * sum(wij)
-            relevanceMap.put(
-                    key, 
-                    (1.0 / newsList.get(key).getWordFrequencies().size()) * relevanceMap.get(key));
-        }
-        
+        long startSortTime = System.nanoTime();
         Entry<Integer, Double>[] relevanceList = MergeSort.sortMap(relevanceMap);
+        long sortTime = (System.nanoTime() - startSortTime);
         
         List<QueryResult> resultList = new ArrayList<>();
         
@@ -245,7 +245,7 @@ public class Index
         }
         
         // Armazena as estatísticas da consulta
-        queryStats.setLastQuery(wordList,resultList, (System.nanoTime() - startTime));
+        queryStats.setLastQuery(wordList, resultList, (System.nanoTime() - startQueryTime), getTime, relevanceTime, sortTime);
         
         // Retorna o resultado
         return resultList;

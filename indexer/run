@@ -1,1 +1,1 @@
-mvnw clean spring-boot:run -Dspring-boot.run.arguments="%*"
+./mvnw clean spring-boot:run -Dspring-boot.run.arguments="$@"

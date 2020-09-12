@@ -96,7 +96,7 @@ public class IndexerConsoleApplication
             }
             System.out.println();
 
-            System.out.println("Tempo da consulta (Em milisegundos): " + TimeUtil.convertNanoToMilliseconds(queryStats.getLastQueryTime()));
+            System.out.println("Tempo da consulta (Em milisegundos): " + TimeUtil.convertNanoToMilliseconds(queryStats.getLastTotalQueryTime()));
 
             System.out.println();
             System.out.println("Resultado:");
@@ -126,7 +126,7 @@ public class IndexerConsoleApplication
 
             String query = new Scanner(System.in).nextLine();
             
-            if(query.isBlank())
+            if(query.isEmpty())
             {
                 System.out.println("A consulta não possui termos");
             }
