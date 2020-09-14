@@ -50,8 +50,10 @@ public class AppConfig
     // Quantidade de testes que serão executados em cada etapa
     public static int testRunSteps = 25;
     
+    // Ponto de log de estatísticas
     public static int insertLogTime = 20000;
     public static int memoryLogTime = 20000;
     
+    // Lote de consultas
     public static int queryChunk = 1000;
 }

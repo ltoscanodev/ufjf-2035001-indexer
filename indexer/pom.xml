@@ -5,7 +5,7 @@
                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
     
     <name>Indexer</name>
-    <description>Indexador de notícias usando a base de dados https://www.kaggle.com/rmisra/news-category-dataset.</description>
+    <description>Indexador de noticias usando a base de dados https://www.kaggle.com/rmisra/news-category-dataset.</description>
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.ltoscano</groupId>
@@ -59,7 +59,6 @@
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
-            <version>3.0.11.RELEASE</version>
         </dependency>
         
         <dependency>

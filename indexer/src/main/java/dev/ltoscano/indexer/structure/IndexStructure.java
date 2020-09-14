@@ -12,7 +12,7 @@ public abstract class IndexStructure
 {
     public enum IndexStructureType 
     {
-        HashTable(0), AVL(1), SkipList(2), Trie(3);
+        HashTable(0), AVL(1), Trie(2);
         
         private final int value;
 

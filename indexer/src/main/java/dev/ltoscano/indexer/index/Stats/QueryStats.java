@@ -12,11 +12,8 @@ import java.util.List;
  */
 public class QueryStats
 {
-    // Lista de termos da consulta
     private List<String> lastQuery;
-    // Tempo para obter o resultado da consulta (em nanosegundos)
     private long lastTotalQueryTime;
-    // Lista de resultados da consulta (Notícia, relevância)
     private List<QueryResult> lastQueryResult;
     
     private int queryCount;
@@ -82,7 +79,7 @@ public class QueryStats
         if((queryCount % AppConfig.queryChunk) == 0)
         {
             chunkQueryTimeList.add(chunkQueryTime);
-            getChunkGetTimeList().add(chunkGetTime);
+            chunkGetTimeList.add(chunkGetTime);
             chunkRelevanceTimeList.add(chunkRelevanceTime);
             chunkSortTimeList.add(chunkSortTime);
             

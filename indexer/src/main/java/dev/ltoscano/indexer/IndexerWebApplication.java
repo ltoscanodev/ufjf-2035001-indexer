@@ -26,11 +26,6 @@ public class IndexerWebApplication
             }
             case 2:
             {
-                AppConfig.indexStructureType = IndexStructureType.SkipList;
-                break;
-            }
-            case 3:
-            {
                 AppConfig.indexStructureType = IndexStructureType.Trie;
                 break;
             }

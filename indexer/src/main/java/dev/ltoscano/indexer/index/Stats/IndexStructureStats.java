@@ -1,6 +1,5 @@
 package dev.ltoscano.indexer.index.stats;
 
-import dev.ltoscano.indexer.configuration.AppConfig;
 import java.util.ArrayList;
 import java.util.List;
 

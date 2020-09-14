@@ -161,11 +161,6 @@ public class IndexerConsoleApplication
             }
             case 2:
             {
-                AppConfig.indexStructureType = IndexStructure.IndexStructureType.SkipList;
-                break;
-            }
-            case 3:
-            {
                 AppConfig.indexStructureType = IndexStructure.IndexStructureType.Trie;
                 break;
             }

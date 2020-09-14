@@ -7,11 +7,8 @@ package dev.ltoscano.indexer.index.stats;
  */
 public class IndexStats 
 {
-    // Quantidade de notícias no dataset
     private int datasetSize;
-    // Quantidade de entradas no índice (Termos)
     private int indexEntries;
-    // Tempo de construção (em nanosegundos) do índice
     private long buildTime;
     
     public IndexStats()

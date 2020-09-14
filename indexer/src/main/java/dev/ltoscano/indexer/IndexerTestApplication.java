@@ -47,8 +47,7 @@ public class IndexerTestApplication
                 + "Tempo de consulta para 1 palavra - Pior caso(ms);"
                 + "Tempo de consulta para 2 palavras - Melhor caso(ms);"
                 + "Tempo de consulta para 2 palavras - Caso médio(ms);"
-                + "Tempo de consulta para 2 palavras - Pior caso(ms);"
-                + "Pior tempo de consulta(ms);");
+                + "Tempo de consulta para 2 palavras - Pior caso(ms);");
         resultWriter.newLine();
         
         for(TestResult testResult : testResultList)
